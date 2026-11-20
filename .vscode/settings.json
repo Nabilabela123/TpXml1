@@ -1,3 +1,4 @@
 {
-    "xml.downloadExternalResources.enabled": true
+    "xml.downloadExternalResources.enabled": true,
+    "liveServer.settings.port": 5502
 }
