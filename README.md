@@ -98,12 +98,6 @@ La feuille `tp.xsl` utilise XSLT 2.0. Elle parcourt chaque élément `etudiant`,
 
 Le CSS est intégré directement dans le fichier XSL afin de mettre en forme le titre, les informations des étudiants et les tableaux.
 
-## Utilisation
-
-1. Ouvrir `tp.xml` dans un navigateur prenant en charge les transformations XSL.
-2. Vérifier que les trois fichiers `tp.xml`, `tp.dtd` et `tp.xsl` se trouvent dans le même dossier.
-3. Le navigateur applique la feuille `tp.xsl` et affiche les étudiants avec leurs emprunts.
-
 ## Résultat
 
 ![Aperçu de la page générée](image.png)
