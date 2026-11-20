@@ -1,55 +1,66 @@
-"# TpXml1" 
-"# TpXml1" 
-Ce projet consiste à réaliser une application de gestion de bibliothèque en utilisant les technologies XML, DTD et XSL.
 
-L'application permet d'afficher les informations des étudiants ainsi que les livres qu'ils ont empruntés.
+# TP XML – Gestion de bibliothèque
 
-<img width="1900" height="797" alt="image" src="https://github.com/user-attachments/assets/8ab90324-8e72-4be2-8980-0878619b50ea" />
-=======
-#TP XML – Gestion de bibliothèque
-1. Présentation du projet
-Ce projet est une petite application de gestion de bibliothèque réalisée avec XML, DTD et XSLT. Le fichier XML contient les étudiants et les livres qu’ils ont empruntés. La DTD définit la structure et les règles du document XML. La feuille XSL transforme les données XML en une page HTML présentée sous forme de fiches étudiants et de tableaux de livres.
-2. Technologies utilisées
-- XML : stockage des données des étudiants et de leurs emprunts.
-- DTD : validation de la structure du document XML.
-- XSLT : transformation du document XML en HTML.
-- HTML / CSS : affichage et mise en forme du résultat.
-3. Structure du projet
-TpXml1-main/
+## Présentation
+
+Ce projet présente une gestion simple de bibliothèque avec XML, DTD et XSLT.
+
+- Le fichier `tp.xml` contient les étudiants et les livres qu'ils ont empruntés.
+- La DTD `tp.dtd` décrit la structure du document XML et les valeurs autorisées.
+- La feuille `tp.xsl` transforme les données XML en une page HTML.
+- Le fichier `image.png` contient une capture du résultat obtenu.
+
+## Technologies utilisées
+
+- XML : stockage des données ;
+- DTD : validation de la structure du document ;
+- XSLT : transformation du document XML en HTML ;
+- HTML et CSS : présentation du résultat.
+
+## Structure du projet
+
+```text
+.
 ├── tp.xml       # Données de la bibliothèque
-├── tp.dtd       # Règles et structure du document XML
+├── tp.dtd       # Règles de validation XML
 ├── tp.xsl       # Transformation XML vers HTML
-├── resultat.html # Résultat HTML généré
+├── image.png    # Aperçu du résultat
 └── README.md    # Documentation du projet
-4. Code du projet
-4.1 Fichier tp.xml
-Le fichier XML contient deux étudiants et leurs emprunts. Il fait référence à la feuille de style XSL et à la DTD.
+```
+
+## Fichier XML
+
+Le fichier `tp.xml` déclare la DTD et la feuille de transformation utilisées :
+
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="tp.xsl"?>
 <!DOCTYPE biblio SYSTEM "tp.dtd">
 
 <biblio>
     <etudiant code="E01" nom="Ali" prenom="Ahmed" age="22">
-        <livre id="L01" titre="XML" dateEmprunt="2026-10-01" rendu="oui"/>
-        <livre id="L02" titre="Java" dateEmprunt="2026-10-10" rendu="non"/>
-    </etudiant>
-    <etudiant code="E02" nom="Sara" prenom="Nadia" age="23">
-        <livre id="L01" titre="Python" dateEmprunt="2026-10-15" rendu="oui"/>
-        <livre id="L03" titre="Oracle" dateEmprunt="2026-10-15" rendu="non"/>
+        <livre id="L01" titre="XML"
+               dateEmprunt="2026-10-01" rendu="oui"/>
+        <livre id="L02" titre="Java"
+               dateEmprunt="2026-10-10" rendu="non"/>
     </etudiant>
 </biblio>
-4.2 Fichier tp.dtd
-La DTD impose au moins un étudiant dans biblio, au moins un livre par étudiant et définit les attributs obligatoires. L'attribut rendu accepte oui ou non et prend non par défaut.
+```
+
+## Fichier DTD
+
+La DTD `tp.dtd` impose les éléments suivants :
+
+- `biblio` doit contenir au moins un étudiant ;
+- chaque étudiant doit emprunter au moins un livre ;
+- les attributs `code`, `nom`, `prenom` et `age` sont obligatoires ;
+- les attributs `id`, `titre` et `dateEmprunt` sont obligatoires ;
+- l'attribut `rendu` vaut `oui` ou `non` et a pour valeur par défaut `non`.
+
+```dtd
 <!ELEMENT biblio (etudiant+)>
 <!ELEMENT etudiant (livre+)>
 <!ELEMENT livre EMPTY>
-
-<!ATTLIST etudiant
-    code CDATA #REQUIRED
-    nom CDATA #REQUIRED
-    prenom CDATA #REQUIRED
-    age CDATA #REQUIRED
->
 
 <!ATTLIST livre
     id NMTOKEN #REQUIRED
@@ -57,11 +68,13 @@ La DTD impose au moins un étudiant dans biblio, au moins un livre par étudiant
     dateEmprunt CDATA #REQUIRED
     rendu (oui | non) "non"
 >
-4.3 Fichier tp.xsl
-La feuille XSL parcourt les étudiants avec xsl:for-each, affiche leurs informations puis parcourt leurs livres pour construire un tableau HTML. Le CSS intégré donne une présentation visuelle à la page.
-La feuille utilise XSLT 1.0 pour être compatible avec les moteurs XSLT intégrés aux navigateurs courants. Les instructions utilisées dans ce projet sont compatibles avec XSLT 1.0.
+```
 
-Extrait principal :
+## Fichier XSL
+
+La feuille `tp.xsl` utilise XSLT 2.0. Elle parcourt chaque élément `etudiant`, affiche ses informations dans une liste, puis affiche ses livres dans un tableau HTML.
+
+```xml
 <xsl:for-each select="biblio/etudiant">
     <ul>
         <li>Code : <xsl:value-of select="@code"/></li>
@@ -71,12 +84,6 @@ Extrait principal :
     </ul>
 
     <table>
-        <tr>
-            <th>ID</th>
-            <th>Titre</th>
-            <th>Date emprunt</th>
-            <th>Rendu</th>
-        </tr>
         <xsl:for-each select="livre">
             <tr>
                 <td><xsl:value-of select="@id"/></td>
@@ -87,7 +94,16 @@ Extrait principal :
         </xsl:for-each>
     </table>
 </xsl:for-each>
-5. Résultat obtenu
+```
 
-![alt text](image.png)
-(Ajout du README et du resultat HTML)
+Le CSS est intégré directement dans le fichier XSL afin de mettre en forme le titre, les informations des étudiants et les tableaux.
+
+## Utilisation
+
+1. Ouvrir `tp.xml` dans un navigateur prenant en charge les transformations XSL.
+2. Vérifier que les trois fichiers `tp.xml`, `tp.dtd` et `tp.xsl` se trouvent dans le même dossier.
+3. Le navigateur applique la feuille `tp.xsl` et affiche les étudiants avec leurs emprunts.
+
+## Résultat
+
+![Aperçu de la page générée](image.png)
